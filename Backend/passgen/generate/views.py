@@ -31,11 +31,9 @@ class GeneratePasswordView(APIView):
 
         generated_password = get_random_string(password_length, character_set)
 
-        # Save the generated password to the database (optional)
         password_instance = GeneratedPassword(password=generated_password)
         password_instance.save()
 
-        # Return the generated password
         serializer = GeneratedPasswordSerializer(data={'password': generated_password})
         serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
